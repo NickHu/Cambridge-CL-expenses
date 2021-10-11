@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage{titling}
+\usepackage{datatool}
+\DTLloaddb{expenses}{expenses.csv}
+\DTLsumcolumn{expenses}{Amount}{\sum}
+\DTLround{\sum}{\sum}{2}
+\DTLsumforkeys[\DTLisSubString{\category}{Travel}][\category=Category]{expenses}{Amount}{\travelsum}
+\DTLround{\travelsum}{\travelsum}{2}
+\DTLsumforkeys[\DTLisSubString{\category}{Accomodation}][\category=Category]{expenses}{Amount}{\accomodationsum}
+\DTLround{\accomodationsum}{\accomodationsum}{2}
+\DTLsumforkeys[\DTLisSubString{\category}{Conference}][\category=Category]{expenses}{Amount}{\conferencesum}
+\DTLround{\conferencesum}{\conferencesum}{2}
+\DTLsumforkeys[\DTLisSubString{\category}{Subsistence}][\category=Category]{expenses}{Amount}{\subsistencesum}
+\DTLround{\subsistencesum}{\subsistencesum}{2}
+\DTLsumforkeys[\not \DTLisSubString{\category}{Travel} \and \not \DTLisSubString{\category}{Accomodation} \and \not \DTLisSubString{\category}{Conference} \and \not \DTLisSubString{\category}{Subsistence}][\category=Category]{expenses}{Amount}{\othersum}
+\DTLround{\othersum}{\othersum}{2}
+\usepackage{pdfpages}
+\usepackage{tikz}
+
+%%% CHANGE ME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\date{\today}
+\title{Cambridge trip}
+\author{Nick Hu}
+\newcommand{\costcentre}{NRXY/123}
+\newcommand{\lastfourbank}{1234}
+\newcommand{\signature}{\theauthor}
+% alternatively, for image-based signature
+% \newcommand{\signature}{\includegraphics[height=0.8cm]{signature.png}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% https://tex.stackexchange.com/questions/359189/looping-over-strings
+\def\xloop#1{%
+  \ifx\relax#1
+    \else
+      #1,\expandafter\xloop%
+  \fi}
+\def\characters#1{\expandafter\xloop#1\relax}%
+
+\begin{document}
+\includepdf[pages=-,pagecommand={%
+  \thispagestyle{empty}
+  \ifnum\value{page}=1
+    \begin{tikzpicture}[remember picture, overlay,shift=(current page.north west)]
+      \begin{scope}[x={(current page.north east)},y={(current page.south west)}]
+        \node[anchor=west] at (0.17, 0.42) {\theauthor};
+        \node[anchor=west] at (0.25, 0.46) {\thetitle};
+        \node[anchor=west] at (0.68, 0.46) {\thedate};
+        \node[anchor=west] at (0.78, 0.54) {\travelsum};
+        \node[anchor=west] at (0.78, 0.58) {\accomodationsum};
+        \node[anchor=west] at (0.78, 0.6175) {\conferencesum};
+        \node[anchor=west] at (0.78, 0.655) {\subsistencesum};
+        \node[anchor=west] at (0.78, 0.7) {\othersum};
+        \node[anchor=west] at (0.78, 0.725) {\sum};
+        \foreach [expand list = true] \x[count=\i from 0] in {\characters{\costcentre}}
+          {
+            \if /\x % strip /
+            \else
+              \ifnum\i<2 % strip first 2 characters
+              \else
+                \node at (0.28 + \i/20, 0.82) {\LARGE\x};
+              \fi
+            \fi
+          }
+      \end{scope}
+    \end{tikzpicture}
+  \else
+    \begin{tikzpicture}[remember picture, overlay,shift=(current page.north west)]
+      \begin{scope}[x={(current page.north east)},y={(current page.south west)}]
+        \node[anchor=west] at (0.2, 0.1) {\theauthor};
+        \node[anchor=west] at (0.62, 0.1) {\thedate};
+        \node[anchor=west] at (0.25, 0.128) {\thetitle};
+        \node (date) at (0.1055, 0.2) {};
+        % \node[right = 52.5pt of date] (from) {$\circ$};
+        % \node[right = 52.5pt of from] (to) {$\circ$};
+        % \node[right = 58.3pt of to] (details) {$\circ$};
+        % \node[right = 198pt of details] (cost) {$\circ$};
+        % \node[right = 55pt of cost] (end) {$\circ$};
+        \node[anchor=north west] at (date) {
+          \begin{tabular}{p{52.5pt}p{52.5pt}p{58.3pt}p{198pt}p{55pt}}
+            \DTLforeach*{expenses}{\date=Date,\details=Description,\cost=Amount}{
+              \date & & & \details & \cost \\
+            }
+          \end{tabular}
+        };
+        \node[anchor=west] at (0.78, 0.625) {\sum};
+        \node[anchor=west] at (0.48, 0.78) {\theauthor};
+        \node at (0.8, 0.85) {\lastfourbank};
+        \node[anchor=west] at (0.65, 0.89) {\thedate};
+        \node[anchor=south west] at (0.26, 0.897) {\signature};
+        \foreach [expand list = true] \x[count=\i from 0] in {\characters{\costcentre}}
+          {
+            \if /\x % strip /
+            \else
+              \ifnum\i<2 % strip first 2 characters
+              \else
+                \node at (0.28 + \i/20, 0.725) {\LARGE\x};
+              \fi
+            \fi
+          }
+      \end{scope}
+    \end{tikzpicture}
+  \fi
+}]{template.pdf}
+\end{document}
