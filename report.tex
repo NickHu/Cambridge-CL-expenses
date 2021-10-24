@@ -24,6 +24,7 @@
 \author{Nick Hu}
 \newcommand{\costcentre}{NRXY/123}
 \newcommand{\lastfourbank}{1234}
+\newcommand{\payrollreference}{12345678} % leave blank if you don't have one
 \newcommand{\signature}{\theauthor}
 % alternatively, for image-based signature
 % \newcommand{\signature}{\includegraphics[height=0.8cm]{signature.png}}
@@ -86,6 +87,7 @@
         };
         \node[anchor=west] at (0.78, 0.625) {\sum};
         \node[anchor=west] at (0.48, 0.78) {\theauthor};
+        \node at (0.335, 0.85) {\payrollreference};
         \node at (0.8, 0.85) {\lastfourbank};
         \node[anchor=west] at (0.65, 0.89) {\thedate};
         \node[anchor=south west] at (0.26, 0.897) {\signature};
