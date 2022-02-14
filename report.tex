@@ -6,13 +6,13 @@
 \DTLround{\sum}{\sum}{2}
 \DTLsumforkeys[\DTLisSubString{\category}{Travel}][\category=Category]{expenses}{Amount}{\travelsum}
 \DTLround{\travelsum}{\travelsum}{2}
-\DTLsumforkeys[\DTLisSubString{\category}{Accomodation}][\category=Category]{expenses}{Amount}{\accomodationsum}
+\DTLsumforkeys[\DTLisSubString{\category}{Accommodation}][\category=Category]{expenses}{Amount}{\accomodationsum}
 \DTLround{\accomodationsum}{\accomodationsum}{2}
 \DTLsumforkeys[\DTLisSubString{\category}{Conference}][\category=Category]{expenses}{Amount}{\conferencesum}
 \DTLround{\conferencesum}{\conferencesum}{2}
 \DTLsumforkeys[\DTLisSubString{\category}{Subsistence}][\category=Category]{expenses}{Amount}{\subsistencesum}
 \DTLround{\subsistencesum}{\subsistencesum}{2}
-\DTLsumforkeys[\not \DTLisSubString{\category}{Travel} \and \not \DTLisSubString{\category}{Accomodation} \and \not \DTLisSubString{\category}{Conference} \and \not \DTLisSubString{\category}{Subsistence}][\category=Category]{expenses}{Amount}{\othersum}
+\DTLsumforkeys[\not \DTLisSubString{\category}{Travel} \and \not \DTLisSubString{\category}{Accommodation} \and \not \DTLisSubString{\category}{Conference} \and \not \DTLisSubString{\category}{Subsistence}][\category=Category]{expenses}{Amount}{\othersum}
 \DTLround{\othersum}{\othersum}{2}
 \usepackage{pdfpages}
 \usepackage{tikz}
