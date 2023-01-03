@@ -1,0 +1,34 @@
+
+\documentclass{article}
+\usepackage{titling}
+\usepackage{datatool}
+\DTLloaddb{expenses}{expenses.csv}
+\DTLsumcolumn{expenses}{Amount}{\sum}
+\DTLround{\sum}{\sum}{2}
+\DTLsumforkeys[\DTLisSubString{\category}{Travel}][\category=Category]{expenses}{Amount}{\travelsum}
+\DTLround{\travelsum}{\travelsum}{2}
+\DTLsumforkeys[\DTLisSubString{\category}{Accommodation}][\category=Category]{expenses}{Amount}{\accomodationsum}
+\DTLround{\accomodationsum}{\accomodationsum}{2}
+\DTLsumforkeys[\DTLisSubString{\category}{Conference}][\category=Category]{expenses}{Amount}{\conferencesum}
+\DTLround{\conferencesum}{\conferencesum}{2}
+\DTLsumforkeys[\DTLisSubString{\category}{Subsistence}][\category=Category]{expenses}{Amount}{\subsistencesum}
+\DTLround{\subsistencesum}{\subsistencesum}{2}
+\DTLsumforkeys[\not \DTLisSubString{\category}{Travel} \and \not \DTLisSubString{\category}{Accommodation} \and \not \DTLisSubString{\category}{Conference} \and \not \DTLisSubString{\category}{Subsistence}][\category=Category]{expenses}{Amount}{\othersum}
+\DTLround{\othersum}{\othersum}{2}
+\usepackage{pdfpages}
+\usepackage{tikz}
+
+%%% CHANGE ME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\date{\today}
+%\title{Cambridge trip} % Title will be set by the script
+\author{Nick Hu}
+\newcommand{\costcentre}{NRXY/123}
+\newcommand{\lastfourbank}{1234}
+\newcommand{\payrollreference}{12345678} % leave blank if you don't have one
+\newcommand{\signature}{\theauthor}
+% alternatively, for image-based signature
+% \newcommand{\signature}{\includegraphics[height=0.8cm]{signature.png}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

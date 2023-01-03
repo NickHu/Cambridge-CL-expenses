@@ -14,9 +14,9 @@ Usage:
     ...etc...
     ```
 
-2. Edit the section marked `CHANGE ME` in [report.tex](report.tex) to reflect
+2. Edit the section marked `CHANGE ME` in [preamble.tex](preamble.tex) to reflect
    your details.
-3. Compile (may need to run more than once), e.g. `latexmk -pdf report.tex`.
+3. Compile by running the script [compile_report.sh](compile_report.sh), ```./compile report.sh 'Report Title' doc1.pdf doc2.pdf```, where the docs are a (possibly zero) list of PDF documents to include after the report, e.g. pictures of receipts.
 
 The example output is available [here](misc/example_report.pdf).
 
