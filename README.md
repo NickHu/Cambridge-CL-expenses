@@ -36,7 +36,7 @@ You should also setup custom categories for expenses (this can only be done
 from a phone?), called
 
 * Travel
-* Accomodation
+* Accommodation
 * Conference fees
 * Subsistence
 
