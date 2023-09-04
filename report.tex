@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{titling}
 \usepackage{datatool}
-\DTLloaddb{expenses}{expenses.csv}
+\DTLloaddb[keys={Date,Category,Description,Amount}]{expenses}{expenses.csv}
 \DTLsumcolumn{expenses}{Amount}{\sum}
 \DTLround{\sum}{\sum}{2}
 \DTLsumforkeys[\DTLisSubString{\category}{Travel}][\category=Category]{expenses}{Amount}{\travelsum}
